@@ -1,0 +1,19 @@
+{
+  "name": "project-tracker",
+  "version": "1.0.0",
+  "description": "Tracks your projects and failures",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyler-bennett52/project-tracker.git"
+  },
+  "author": "Tyler Bennett & Steven Gant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tyler-bennett52/project-tracker/issues"
+  },
+  "homepage": "https://github.com/tyler-bennett52/project-tracker#readme"
+}
