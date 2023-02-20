@@ -45,6 +45,10 @@ async function handleGetOne(req, res, next) {
   try {
     const id = req.params.id;
     let theRecord = await req.model.get(req.user.username, id)
+    if (req.user.role === 'admin') {}
+    else if (theRecord.username !== req.user.username) {
+      res.status(403).send('That ain\'t yours buddy');
+    }
     res.status(200).json(theRecord);
   } catch (error) {
     next(error);
@@ -68,6 +72,11 @@ async function handleUpdate(req, res, next) {
   try {
     const id = req.params.id;
     const obj = req.body;
+    let theRecord = await req.model.get(req.user.username, id)
+    if (req.user.role === 'admin') {}
+    else if (theRecord.username !== req.user.username) {
+      res.status(403).send('That ain\'t yours buddy');
+    }
     let updatedRecord = await req.model.update(id, obj)
     res.status(200).json(updatedRecord);
   } catch (error) {

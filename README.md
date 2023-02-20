@@ -1,12 +1,12 @@
-# auth-api (Lab 08)
+# project-tracker (LAB-09)
 
-## Project: Template API buildout w/ Classes
+## Project: Side Project Completion Tracker Back-end
 
-### Author: Tyler Bennett
+### Author: Steve Gant & Tyler Bennett
 
 ### Problem Domain  
 
-Basic API Server template w/Classes.
+Allows users to submit/update their projects and see their average side project completion rate
 
 ### Links and Resources
 
@@ -27,6 +27,9 @@ DATABASE_URL requires a postgres DB url
 
 #### Features / Routes
 
+/ - GET to receive some instructions
+/signup - POST with username/password/role to receive credentials
+/signin - POST with BASIC auth to receive credentials
 /projects - GET & POST projects/:id - GET & POST & DELETE
 
 #### Tests
@@ -39,4 +42,4 @@ npm test
 
 #### Attribution
 
-Built from starter code
+Built from completed Lab-08 which was built from starter code

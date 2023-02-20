@@ -53,7 +53,8 @@ describe ('Auth API server',  () => {
   });
 
   it('Allows creating on api/v2/:model with Token', async () => {
-    let response = await mockRequest.post('/signup').send(adminUser);
+    await mockRequest.post('/signup').send(adminUser);
+    let response = await mockRequest.post('/signin').auth(username, password);
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest
@@ -69,7 +70,7 @@ describe ('Auth API server',  () => {
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest.get('/projects').set('Authorization', `Bearer ${userToken}`);
-    expect(secretResponse.body.length).toBe(1)
+    expect(secretResponse.body.length).toBe(2)
   });
 
   it('Allows users to getOne from /:model', async () => {
@@ -97,8 +98,7 @@ describe ('Auth API server',  () => {
       let parsedResponse = JSON.parse(response.text);
       const userToken = parsedResponse.token
       let secretResponse = await mockRequest
-      .put('/projects/1')
-      .send({name: 'pants', color: 'green', size: 'small'})
+      .delete('/projects/1')
       .set('Authorization', `Bearer ${userToken}`)
       let parsedSecret = JSON.parse(secretResponse.text);
       expect(parsedSecret.message).toBe('Access Denied');
