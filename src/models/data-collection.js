@@ -20,7 +20,12 @@ class DataCollection {
   }
 
   create(record) {
-    return this.model.create(record);
+    try {
+      return this.model.create(record);
+    } catch (error) {
+      return(error.message);
+    }
+ 
   }
 
   update(id, data) {
