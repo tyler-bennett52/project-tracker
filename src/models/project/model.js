@@ -6,7 +6,8 @@ const projectModel = (sequelize, DataTypes) => sequelize.define('Project', {
   completionPercent: { 
     type: DataTypes.INTEGER,
     required: true,
-    validate: { min: 0, max: 100 }
+    validate: { min: 0, max: 100 },
+    username: {type: DataTypes.STRING, required: false}
     
   },
 
