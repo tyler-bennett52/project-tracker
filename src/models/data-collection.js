@@ -10,12 +10,12 @@ class DataCollection {
     this.model = model;
   }
 
-  get(id) {
+  get(username, id) {
     if (id) {
       return this.model.findOne({where: { id }});
     }
     else {
-      return this.model.findAll({});
+      return this.model.findAll({where: { username }});
     }
   }
 

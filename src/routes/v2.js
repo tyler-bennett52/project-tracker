@@ -25,7 +25,8 @@ router.delete('/:model/:id', bearerAuth, aclCheck('delete'), handleDelete);
 
 async function handleGetAll(req, res, next) {
   try {
-    let allRecords = await req.model.get();
+    console.log(req.user.username);
+    let allRecords = await req.model.get(req.user.username);
     res.status(200).json(allRecords);
   } catch (error) {
     next(error);
@@ -36,7 +37,7 @@ async function handleGetAll(req, res, next) {
 async function handleGetOne(req, res, next) {
   try {
     const id = req.params.id;
-    let theRecord = await req.model.get(id)
+    let theRecord = await req.model.get(req.user.username, id)
     res.status(200).json(theRecord);
   } catch (error) {
     next(error);
@@ -47,6 +48,7 @@ async function handleGetOne(req, res, next) {
 async function handleCreate(req, res, next) {
   try {
     let obj = req.body;
+    obj.username = req.user.username;
     let newRecord = await req.model.create(obj);
     res.status(201).json(newRecord);
   } catch (error) {
