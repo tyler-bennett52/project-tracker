@@ -57,18 +57,18 @@ describe ('Auth API server',  () => {
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest
-    .post('/api/v2/clothes')
-    .send({name: 'pants', color: 'blue', size: 'large'})
+    .post('/api/v2/projects')
+    .send({name: '1', description: '1', completionPercent: 1})
     .set('Authorization', `Bearer ${userToken}`)
     let parsedSecret = JSON.parse(secretResponse.text);
-    expect(parsedSecret.color).toBe('blue');
+    expect(parsedSecret.completionPercent).toBe(1);
   });
 
   it('Allows users to getAll from /:model', async () => {
     let response = await mockRequest.post('/signin').auth(username, password);
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
-    let secretResponse = await mockRequest.get('/api/v2/clothes').set('Authorization', `Bearer ${userToken}`);
+    let secretResponse = await mockRequest.get('/api/v2/projects').set('Authorization', `Bearer ${userToken}`);
     expect(secretResponse.body.length).toBe(1)
   });
 
@@ -76,7 +76,7 @@ describe ('Auth API server',  () => {
     let response = await mockRequest.post('/signin').auth(username, password);
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
-    let secretResponse = await mockRequest.get('/api/v2/clothes/1').set('Authorization', `Bearer ${userToken}`);
+    let secretResponse = await mockRequest.get('/api/v2/projects/1').set('Authorization', `Bearer ${userToken}`);
     expect(secretResponse.body.id).toBe(1)
   });
 
@@ -85,11 +85,11 @@ describe ('Auth API server',  () => {
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest
-    .put('/api/v2/clothes/1')
-    .send({name: 'pants', color: 'green', size: 'large'})
+    .put('/api/v2/projects/1')
+    .send({name: '1', description: '1', completionPercent: 2})
     .set('Authorization', `Bearer ${userToken}`)
     let parsedSecret = JSON.parse(secretResponse.text);
-    expect(parsedSecret.color).toBe('green');
+    expect(parsedSecret.completionPercent).toBe(2);
   });
 
     it('Denies access to wrong Roles', async () => {
@@ -97,7 +97,7 @@ describe ('Auth API server',  () => {
       let parsedResponse = JSON.parse(response.text);
       const userToken = parsedResponse.token
       let secretResponse = await mockRequest
-      .put('/api/v2/clothes/1')
+      .put('/api/v2/projects/1')
       .send({name: 'pants', color: 'green', size: 'small'})
       .set('Authorization', `Bearer ${userToken}`)
       let parsedSecret = JSON.parse(secretResponse.text);
@@ -109,21 +109,10 @@ describe ('Auth API server',  () => {
       let parsedResponse = JSON.parse(response.text);
       const userToken = parsedResponse.token
       let secretResponse = await mockRequest
-      .delete('/api/v2/clothes/1')
+      .delete('/api/v2/projects/1')
       .set('Authorization', `Bearer ${userToken}`)
       let parsedSecret = JSON.parse(secretResponse.text);
       expect(parsedSecret).toBe(1);
     });
 
-    it('Can CRUD to v1 with no credentials', async () => {
-      await mockRequest.post('/api/v1/food').send({name: 'Pizza', calories: 200, type: 'protein'});
-      await mockRequest.post('/api/v1/food').send({name: 'Cheese', calories: 200, type: 'protein'});
-      await mockRequest.post('/api/v1/food').send({name: 'Lettuce', calories: 200, type: 'protein'});
-      await mockRequest.put('/api/v1/food/3').send({name: 'Sauce', calories: 200, type: 'protein'});
-      await mockRequest.delete('/api/v1/food/3')
-      let response = await mockRequest.get('/api/v1/food');
-      let response2 = await mockRequest.get('/api/v1/food/2');
-      expect(response.body.length).toBe(2)
-      expect(response2.body.id).toBe(2);
-    });
 });

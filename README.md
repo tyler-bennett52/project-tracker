@@ -27,8 +27,7 @@ DATABASE_URL requires a postgres DB url
 
 #### Features / Routes
 
-/food - GET & POST food/:id - GET & POST & DELETE
-/clothes - GET & POST clothes/:id - GET & POST & DELETE
+/projects - GET & POST projects/:id - GET & POST & DELETE
 
 #### Tests
 
