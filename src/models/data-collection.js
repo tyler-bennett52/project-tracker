@@ -10,12 +10,14 @@ class DataCollection {
     this.model = model;
   }
 
-  get(username, id) {
+  get(user, id) {
     if (id) {
       return this.model.findOne({where: { id }});
+    } else if(user.role === 'admin') {
+      return(this.model.findAll());
     }
     else {
-      return this.model.findAll({where: { username }});
+      return this.model.findAll({where: { username: user.username }});
     }
   }
 

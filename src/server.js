@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(logger);
 
 app.use(authRouter);
-app.use('/api/v1', v1Routes); // http://localhost:3000/api/v1/clothes
+app.use('/api/v1', v1Routes); // http://localhost:3000/api/v1
 app.use('/api/v2', v2Routes);
 
 app.use('*', notFoundHandler);

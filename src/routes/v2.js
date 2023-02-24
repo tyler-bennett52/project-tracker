@@ -25,9 +25,17 @@ router.delete('/:model/:id', bearerAuth, aclCheck('delete'), handleDelete);
 
 async function handleGetAll(req, res, next) {
   try {
-    console.log(req.user.username);
-    let allRecords = await req.model.get(req.user.username);
+    console.log(req.user);
+    let allRecords = await req.model.get(req.user);
+    let average = 0;
+    for(let record of allRecords) {
+      average += record.completionPercent;
+    }
+
+    average /= allRecords.length;
+    allRecords.push(average);
     res.status(200).json(allRecords);
+
   } catch (error) {
     next(error);
   }
