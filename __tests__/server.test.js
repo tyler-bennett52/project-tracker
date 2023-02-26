@@ -19,7 +19,7 @@ describe ('Auth API server',  () => {
   const { username, password } = justAUser;
 
   it('Should 404 for a bad route', async () => {
-    let response = await mockRequest.get('/apples');
+    let response = await mockRequest.post('/');
     expect(response.status).toBe(404)
   });
 
@@ -57,7 +57,7 @@ describe ('Auth API server',  () => {
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest
-    .post('/api/v2/projects')
+    .post('/projects')
     .send({name: '1', description: '1', completionPercent: 1})
     .set('Authorization', `Bearer ${userToken}`)
     let parsedSecret = JSON.parse(secretResponse.text);
@@ -68,7 +68,7 @@ describe ('Auth API server',  () => {
     let response = await mockRequest.post('/signin').auth(username, password);
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
-    let secretResponse = await mockRequest.get('/api/v2/projects').set('Authorization', `Bearer ${userToken}`);
+    let secretResponse = await mockRequest.get('/projects').set('Authorization', `Bearer ${userToken}`);
     expect(secretResponse.body.length).toBe(1)
   });
 
@@ -76,7 +76,7 @@ describe ('Auth API server',  () => {
     let response = await mockRequest.post('/signin').auth(username, password);
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
-    let secretResponse = await mockRequest.get('/api/v2/projects/1').set('Authorization', `Bearer ${userToken}`);
+    let secretResponse = await mockRequest.get('/projects/1').set('Authorization', `Bearer ${userToken}`);
     expect(secretResponse.body.id).toBe(1)
   });
 
@@ -85,7 +85,7 @@ describe ('Auth API server',  () => {
     let parsedResponse = JSON.parse(response.text);
     const userToken = parsedResponse.token
     let secretResponse = await mockRequest
-    .put('/api/v2/projects/1')
+    .put('/projects/1')
     .send({name: '1', description: '1', completionPercent: 2})
     .set('Authorization', `Bearer ${userToken}`)
     let parsedSecret = JSON.parse(secretResponse.text);
@@ -97,7 +97,7 @@ describe ('Auth API server',  () => {
       let parsedResponse = JSON.parse(response.text);
       const userToken = parsedResponse.token
       let secretResponse = await mockRequest
-      .put('/api/v2/projects/1')
+      .put('/projects/1')
       .send({name: 'pants', color: 'green', size: 'small'})
       .set('Authorization', `Bearer ${userToken}`)
       let parsedSecret = JSON.parse(secretResponse.text);
@@ -109,7 +109,7 @@ describe ('Auth API server',  () => {
       let parsedResponse = JSON.parse(response.text);
       const userToken = parsedResponse.token
       let secretResponse = await mockRequest
-      .delete('/api/v2/projects/1')
+      .delete('/projects/1')
       .set('Authorization', `Bearer ${userToken}`)
       let parsedSecret = JSON.parse(secretResponse.text);
       expect(parsedSecret).toBe(1);
